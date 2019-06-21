@@ -1,0 +1,16 @@
+[
+    {
+        "model": "test00_basic.A",
+        "fields": {
+            "x": 1,
+            "y": "a"
+        }
+    },
+    {
+        "model": "test00_basic.A",
+        "fields": {
+            "x": 2,
+            "y": "abc"
+        }
+    }
+]
