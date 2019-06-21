@@ -2,6 +2,16 @@ from setuptools import setup, find_packages
 
 from composite_pk import __version__
 
+extra_tests = [
+    'pytest>=4',
+    'pytest-cov>=2',
+    'pytest-django>=3',
+    'psycopg2',
+]
+extra_dev = [
+    *extra_tests,
+]
+
 setup(
     name='django-composite-pk',
     version=__version__,
@@ -15,6 +25,11 @@ setup(
     install_requires=[
         'django>=2',
     ],
+
+    extras_require={
+        'test': extra_tests,
+        'dev': extra_dev,
+    },
 
     classifiers=[
         'Intended Audience :: Developers',
