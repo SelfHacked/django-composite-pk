@@ -7,3 +7,6 @@ __pycache__/
 
 # Venv
 .venv/
+
+# Pip
+*.egg-info/
