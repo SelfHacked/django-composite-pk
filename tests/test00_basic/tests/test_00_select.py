@@ -9,3 +9,11 @@ def test_get_value():
         (1, 'a'),
         (2, 'abc'),
     }
+
+
+@pytest.mark.django_db
+def test_exact_lookup():
+    a = A.objects.get(primary_key=(1, 'a'))
+    assert a.x == 1
+    assert a.y == 'a'
+    assert a.primary_key == (1, 'a')
