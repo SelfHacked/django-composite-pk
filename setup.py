@@ -24,6 +24,7 @@ setup(
 
     install_requires=[
         'django>=2',
+        'django-model-wrappers @ https://github.com/SelfHacked/django-model-wrappers/archive/master.zip',
     ],
 
     extras_require={
