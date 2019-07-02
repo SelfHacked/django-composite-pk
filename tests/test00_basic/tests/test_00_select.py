@@ -16,4 +16,5 @@ def test_exact_lookup():
     a = A.objects.get(primary_key=(1, 'a'))
     assert a.x == 1
     assert a.y == 'a'
+    assert a.text == 'sample text'
     assert a.primary_key == (1, 'a')

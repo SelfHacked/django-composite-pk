@@ -3,7 +3,8 @@
         "model": "test00_basic.A",
         "fields": {
             "x": 1,
-            "y": "a"
+            "y": "a",
+            "text": "sample text"
         }
     },
     {
