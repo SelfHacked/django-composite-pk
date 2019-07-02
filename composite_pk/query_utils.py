@@ -9,3 +9,7 @@ class CompositePrimaryKeyDeferredAttribute(object):
             getattr(instance, attr)
             for attr in self.attrs
         )
+
+    def __set__(self, instance, value):
+        # ignore
+        pass
