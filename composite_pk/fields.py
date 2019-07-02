@@ -10,8 +10,9 @@ from django.db.models.query_utils import (
     DeferredAttribute as _DeferredAttribute,
 )
 
-from .query_utils import (
-    CompositePrimaryKeyDeferredAttribute as _CPKDeferredAttribute,
+from .util import (
+    ConstantValueProperty as _Constant,
+    AttrTupleProperty as _AttrTuple,
 )
 
 BaseField = _AutoField
@@ -23,10 +24,11 @@ class CompositePrimaryKey(BaseField):
             *fields: str,
             **options,
     ):
-        self.concrete = False
         super().__init__(**options)
-        self.primary_key = True
         self.fields = fields
+
+    primary_key = _Constant(True)
+    concrete = _Constant(False)
 
     @classmethod
     @_lru_cache(maxsize=None)
@@ -35,10 +37,6 @@ class CompositePrimaryKey(BaseField):
         return {
             'exact': lookups['exact'],
         }
-
-    def set_attributes_from_name(self, name):
-        super().set_attributes_from_name(name)
-        self.concrete = False
 
     def deconstruct(self):
         name, path, args, kwargs = super().deconstruct()
@@ -50,7 +48,7 @@ class CompositePrimaryKey(BaseField):
         super().contribute_to_class(cls, name, **kwargs)
         if isinstance(getattr(cls, self.attname), _DeferredAttribute):
             # replace the deferred attribute
-            setattr(cls, self.attname, _CPKDeferredAttribute(*self.fields))
+            setattr(cls, self.attname, _AttrTuple(*self.fields))
 
     def get_prep_value(self, value):
         return _Field.get_prep_value(self, value)
