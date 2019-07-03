@@ -1,0 +1,25 @@
+[
+    {
+        "model": "test00_basic.A",
+        "fields": {
+            "x": 1,
+            "y": "a",
+            "text": "sample text"
+        }
+    },
+    {
+        "model": "test00_basic.A",
+        "fields": {
+            "x": 1,
+            "y": "b",
+            "text": "sample text 2"
+        }
+    },
+    {
+        "model": "test00_basic.A",
+        "fields": {
+            "x": 2,
+            "y": "abc"
+        }
+    }
+]
