@@ -2,14 +2,19 @@ from setuptools import setup, find_packages
 
 from composite_pk import __version__
 
-extra_tests = [
+extra_test = [
     'pytest>=4',
     'pytest-cov>=2',
     'pytest-django>=3',
     'psycopg2',
 ]
 extra_dev = [
-    *extra_tests,
+    *extra_test,
+]
+
+extra_ci = [
+    *extra_test,
+    'python-coveralls',
 ]
 
 setup(
@@ -23,14 +28,18 @@ setup(
 
     packages=find_packages(),
 
+    python_requires='>=3.6',
+
     install_requires=[
         'django>=2',
         'django-model-wrappers @ https://github.com/SelfHacked/django-model-wrappers/archive/master.zip',
     ],
 
     extras_require={
-        'test': extra_tests,
+        'test': extra_test,
         'dev': extra_dev,
+
+        'ci': extra_ci,
     },
 
     classifiers=[
