@@ -17,6 +17,7 @@ setup(
     version=__version__,
     description='Composite primary key for Django.',
 
+    url='https://github.com/SelfHacked/django-composite-pk',
     author='SelfDecode',
     author_email='zheng@selfdecode.com',
 
