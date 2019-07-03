@@ -19,3 +19,12 @@ def test_exact_lookup():
     assert a.y == 'a'
     assert a.text == 'sample text'
     assert a.primary_key == (1, 'a')
+
+
+@pytest.mark.django_db
+def test_in_lookup():
+    a = A.objects.get(primary_key__in=((1, 'b'),))
+    assert a.x == 1
+    assert a.y == 'b'
+    assert a.text == 'sample text 2'
+    assert a.primary_key == (1, 'b')

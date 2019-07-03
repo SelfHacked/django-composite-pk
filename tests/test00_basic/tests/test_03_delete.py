@@ -3,7 +3,6 @@ import pytest
 from ..models import A
 
 
-@pytest.mark.xfail(reason='`in` lookup not supported')
 @pytest.mark.django_db
 def test_obj_delete():
     a = A.objects.get(x=2)
