@@ -15,19 +15,22 @@ def test_obj_update():
 @pytest.mark.django_db
 def test_manager_update_pk():
     A.objects.filter(primary_key=(1, 'a')).update(text='tttttt')
-    assert A.objects.get(x=1).text == 'tttttt'
+    assert A.objects.get(x=1, y='a').text == 'tttttt'
+    assert A.objects.get(x=1, y='b').text == 'sample text 2'
     assert A.objects.get(x=2).text is None
 
 
 @pytest.mark.django_db
 def test_manager_update_all():
     A.objects.all().update(text='tttttt')
-    assert A.objects.get(x=1).text == 'tttttt'
+    assert A.objects.get(x=1, y='a').text == 'tttttt'
+    assert A.objects.get(x=1, y='b').text == 'tttttt'
     assert A.objects.get(x=2).text == 'tttttt'
 
 
 @pytest.mark.django_db
 def test_manager_update_filter():
-    A.objects.filter(x__in=(1, 2)).update(text='tttttt')
-    assert A.objects.get(x=1).text == 'tttttt'
-    assert A.objects.get(x=2).text == 'tttttt'
+    A.objects.filter(x=1).update(text='tttttt')
+    assert A.objects.get(x=1, y='a').text == 'tttttt'
+    assert A.objects.get(x=1, y='b').text == 'tttttt'
+    assert A.objects.get(x=2).text is None

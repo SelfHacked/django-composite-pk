@@ -7,6 +7,7 @@ from ..models import A
 def test_get_value():
     assert set(a.primary_key for a in A.objects.all()) == {
         (1, 'a'),
+        (1, 'b'),
         (2, 'abc'),
     }
 
