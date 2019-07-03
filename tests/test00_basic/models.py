@@ -1,6 +1,6 @@
 from django.db import models
 
-from composite_pk.fields import CompositePrimaryKey
+from composite_pk import CompositePrimaryKey
 
 
 class A(models.Model):
