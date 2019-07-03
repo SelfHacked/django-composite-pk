@@ -1,3 +1,4 @@
+import logging as _logging
 import typing as _typing
 from functools import (
     lru_cache as _lru_cache,
@@ -6,6 +7,9 @@ from functools import (
 from django.db.models import (
     Field as _Field,
     AutoField as _AutoField,
+)
+from django.db.models.options import (
+    Options as _Options,
 )
 from django.db.models.query_utils import (
     DeferredAttribute as _DeferredAttribute,
@@ -25,6 +29,8 @@ from .util import (
 )
 
 BaseField = _AutoField
+
+logger = _logging.getLogger(__name__)
 
 
 class CompositePrimaryKey(BaseField):
@@ -80,11 +86,18 @@ class CompositePrimaryKey(BaseField):
             raise ValueError('args from super().deconstruct() should be [] - check django compatibility')
         return name, path, self.field_names, kwargs
 
+    def _check_unique_together(self, meta: _Options):
+        for uniq in meta.unique_together:
+            if set(uniq) == set(self.field_names):
+                return
+        logger.warning(f'`unique_together` for composite primary key {self.field_names} not set')
+
     def contribute_to_class(self, cls, name, **kwargs):
         super().contribute_to_class(cls, name, **kwargs)
         if isinstance(getattr(cls, self.attname), _DeferredAttribute):
             # replace the deferred attribute
             setattr(cls, self.attname, _AttrTuple(*self.field_names))
+        self._check_unique_together(self.model_wrapper.meta)
 
     def get_prep_value(self, value):
         return _Field.get_prep_value(self, value)
