@@ -8,7 +8,7 @@ class CompositePrimaryKeyColumn(_Col):
         sqls = []
         params = []
         target: _CPK = self.target
-        for field in target.join_fields:
+        for field in target.fields:
             col = field.col(self.alias)
             sql, param = col.as_sql(compiler, connection)
             sqls.append(sql)

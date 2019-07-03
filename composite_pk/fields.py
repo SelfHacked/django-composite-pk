@@ -34,7 +34,7 @@ class CompositePrimaryKey(BaseField):
             **options,
     ):
         super().__init__(**options)
-        self.fields = fields
+        self.field_names = fields
 
     primary_key = _Constant(True)
     concrete = _Constant(False)
@@ -49,8 +49,8 @@ class CompositePrimaryKey(BaseField):
 
     @cached_property
     @_returns(tuple)
-    def join_fields(self) -> _typing.Sequence[_FieldWrapper]:
-        for name in self.fields:
+    def fields(self) -> _typing.Sequence[_FieldWrapper]:
+        for name in self.field_names:
             yield self.model_wrapper.get_field(name=name)
 
     def get_col(self, alias, output_field=None):
@@ -78,13 +78,13 @@ class CompositePrimaryKey(BaseField):
         name, path, args, kwargs = super().deconstruct()
         if args:
             raise ValueError('args from super().deconstruct() should be [] - check django compatibility')
-        return name, path, self.fields, kwargs
+        return name, path, self.field_names, kwargs
 
     def contribute_to_class(self, cls, name, **kwargs):
         super().contribute_to_class(cls, name, **kwargs)
         if isinstance(getattr(cls, self.attname), _DeferredAttribute):
             # replace the deferred attribute
-            setattr(cls, self.attname, _AttrTuple(*self.fields))
+            setattr(cls, self.attname, _AttrTuple(*self.field_names))
 
     def get_prep_value(self, value):
         return _Field.get_prep_value(self, value)
