@@ -1,12 +1,17 @@
 from setuptools import setup, find_packages
 
+from add_flake8_plugin import Plugins
 from composite_pk import __version__
 
+_extra_test_flake8 = list(Plugins())
 extra_test = [
     'pytest>=4',
     'pytest-cov>=2',
     'pytest-django>=3',
     'psycopg2',
+
+    'flake8',
+    *_extra_test_flake8,
 ]
 extra_dev = [
     *extra_test,
