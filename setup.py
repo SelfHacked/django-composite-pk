@@ -1,9 +1,12 @@
 from setuptools import setup, find_packages
 
-from add_flake8_plugin import Plugins
 from composite_pk import __version__
 
-_extra_test_flake8 = list(Plugins())
+with open('flake8-extensions.txt') as f:
+    _extra_test_flake8 = [
+        line.strip()
+        for line in f
+    ]
 extra_test = [
     'pytest>=4',
     'pytest-cov>=2',
