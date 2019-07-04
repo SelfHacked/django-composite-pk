@@ -2,11 +2,19 @@ from setuptools import setup, find_packages
 
 from composite_pk import __version__
 
+with open('flake8-extensions.txt') as f:
+    _extra_test_flake8 = [
+        line.strip()
+        for line in f
+    ]
 extra_test = [
     'pytest>=4',
     'pytest-cov>=2',
     'pytest-django>=3',
     'psycopg2',
+
+    'flake8',
+    *_extra_test_flake8,
 ]
 extra_dev = [
     *extra_test,

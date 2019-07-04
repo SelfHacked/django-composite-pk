@@ -23,6 +23,7 @@ before_script:
 
 script:
   - pytest --cov --cov-report term-missing:skip-covered
+  - flake8 ../composite_pk/
 
 after_success:
   - coveralls

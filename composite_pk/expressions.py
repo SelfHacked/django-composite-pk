@@ -17,6 +17,6 @@ class CompositePrimaryKeyColumn(_Col):
         return final_sql, params
 
 
-from .fields import (
+from .fields import (  # noqa: E402
     CompositePrimaryKey as _CPK,
 )

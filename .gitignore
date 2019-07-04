@@ -10,6 +10,7 @@ __pycache__/
 
 # Pip
 *.egg-info/
+dist/
 
 # Test
 .pytest_cache/

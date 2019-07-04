@@ -83,14 +83,20 @@ class CompositePrimaryKey(BaseField):
     def deconstruct(self):
         name, path, args, kwargs = super().deconstruct()
         if args:
-            raise ValueError('args from super().deconstruct() should be [] - check django compatibility')
+            raise ValueError(
+                'args from super().deconstruct() should be [] - '
+                'check django compatibility',
+            )
         return name, path, self.field_names, kwargs
 
     def _check_unique_together(self, meta: _Options):
         for uniq in meta.unique_together:
             if set(uniq) == set(self.field_names):
                 return
-        logger.warning(f'`unique_together` for composite primary key {self.field_names} not set')
+        logger.warning(
+            '`unique_together` for composite primary key '
+            f'{self.field_names} not set',
+        )
 
     def contribute_to_class(self, cls, name, **kwargs):
         super().contribute_to_class(cls, name, **kwargs)
@@ -103,6 +109,6 @@ class CompositePrimaryKey(BaseField):
         return _Field.get_prep_value(self, value)
 
 
-from .expressions import (
+from .expressions import (  # noqa: E402
     CompositePrimaryKeyColumn as _CPKCol,
 )
